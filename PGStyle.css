@@ -1,0 +1,39 @@
+body{
+  background-color: slategrey;
+}
+
+.content{
+  margin-top: 80px;
+  margin-bottom: 10px;
+  background-color: gainsboro;
+  padding: 70px;
+  width: 100%;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 4px;
+  border-color: black;
+  border-style: outset;
+}
+
+#display{
+  width:100%;
+
+}
+#slider{
+  width:100%;
+}
+#length{
+  display: inline-block;
+  width: 100px;
+}
+h2.headerCen{
+  text-align: center;
+}
+
+.buttonHolder{
+  text-align: center;
+}
+
+.tb{
+  text-align: center;
+}

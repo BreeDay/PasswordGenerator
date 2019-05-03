@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	 <!--Cognito JavaScript-->
+   <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+ 	<script src="js/amazon-cognito-auth.min.js"></script>
+	<script src="js/amazon-cognito-identity.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.7.16.min.js"></script>
+	<script src="js/config.js"></script>
+  </head>
+
+  <body>
+	<div class="container">
+      <div>
+        <h2>User Profile</h2>
+		<button type="button" onclick="signOut()">Sign out</button>
+      </div>
+
+	<div>
+
+		<h4>Personal Information</h4>
+
+		<br>
+		<div>
+			<label>Welcome to the <span>Password Generator User Account</span></label>
+		</div>
+		<div>
+			<label id="email_value"></label>
+		</div>
+
+    </div>
+
+    <script>
+	var data = {
+		UserPoolId : _config.cognito.userPoolId,
+        ClientId : _config.cognito.clientId
+    };
+    var userPool = new AmazonCognitoIdentity.CognitoUserPool(data);
+    var cognitoUser = userPool.getCurrentUser();
+
+	window.onload = function(){
+    if (cognitoUser != null) {
+        cognitoUser.getSession(function(err, session) {
+            if (err) {
+                alert(err);
+                return;
+            }
+            console.log('session validity: ' + session.isValid());
+			//Set the profile info
+			cognitoUser.getUserAttributes(function(err, result) {
+				if (err) {
+					console.log(err);
+					return;
+				}
+				console.log(result);
+				document.getElementById("email_value").innerHTML = result[2].getValue();
+			});
+
+        });
+    }
+}
+	function signOut(){
+	    if (cognitoUser != null) {
+          cognitoUser.signOut();
+            window.location.href = "index.htm.htm";
+        }
+	}
+
+  AWS.config.region = 'us-east-1';
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials({IdentityPoolId: 'us-east-1_KZ1MqZeNA'});
+var dynamodb = new AWS.DynamoDB({credentials: AWS.config.credentials});
+var params = {
+  Item: {
+   "PasswordID": {
+     S: "Somewhat Famous"
+    },
+   "SlotNum": {
+     S: "No One You Know"
+    },
+   "UserID": {
+     S: "Call Me Today"
+    }
+  },
+  ReturnConsumedCapacity: "TOTAL",
+  TableName: "PassGen"
+ };
+ dynamodb.putItem(params, function(err, data) {
+   if (err) console.log(err, err.stack); // an error occurred
+   else     console.log(data);           // successful response
+   /*
+   data = {
+    ConsumedCapacity: {
+     CapacityUnits: 1,
+     TableName: "Music"
+    }
+   }
+   */
+ });
+    </script>
+<h2>Store up to 10 Passwords</h2>
+<div class ="div1">
+  <b>1:</b>
+  <input type="text" name="sname1">
+  <input type="text" id="display1">
+  <input type="range" min= "0" max="26" name="slider1" id="slider1">
+  <button onclick="generate(1)">Generate Password</button>
+  <button onclick="copypss(1)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div2">
+  <b>2:</b>
+  <input type="text" name="sname2">
+  <input type="text" id="display2">
+  <input type="range" min= "0" max="26" name="slider2" id="slider2">
+  <button onclick="generate(2)">Generate Password</button>
+  <button onclick="copypss(2)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div3">
+  <b>3:</b>
+  <input type="text" name="sname3">
+  <input type="text" id="display3">
+  <input type="range" min= "0" max="26" name="slider3" id="slider3">
+  <button onclick="generate(3)">Generate Password</button>
+  <button onclick="copypss(3)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div4">
+  <b>4:</b>
+  <input type="text" name="sname4">
+  <input type="text" id="display4">
+  <input type="range" min= "0" max="26" name="slider4" id="slider4">
+  <button onclick="generate(4)">Generate Password</button>
+  <button onclick="copypss(4)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div5">
+  <b>5:</b>
+  <input type="text" name="sname5">
+  <input type="text" id="display5">
+  <input type="range" min= "0" max="26" name="slider5" id="slider5">
+  <button onclick="generate(5)">Generate Password</button>
+  <button onclick="copypss(5)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div6">
+  <b>6:</b>
+  <input type="text" name="sname6">
+  <input type="text" id="display6">
+  <input type="range" min= "0" max="26" name="slider6" id="slider6">
+  <button onclick="generate(6)">Generate Password</button>
+  <button onclick="copypss(6)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div7">
+  <b>7:</b>
+  <input type="text" name="sname7">
+  <input type="text" id="display7">
+  <input type="range" min= "0" max="26" name="slider7" id="slider7">
+  <button onclick="generate(7)">Generate Password</button>
+  <button onclick="copypss(7)">Copy to Clipboard</button>
+</div><br/>
+<div class ="div8">
+  <b>8:</b>
+  <input type="text" name="sname">
+  <input type="text" id="display">
+  <input type="range" min= "0" max="26" name="slider" id="slider">
+  <button onclick="generate()">Generate Password</button>
+  <button onclick="copypss()">Copy to Clipboard</button>
+</div><br/>
+<div class ="div9">
+  <b>9:</b>
+  <input type="text" name="sname">
+  <input type="text" id="display">
+  <input type="range" min= "0" max="26" name="slider" id="slider">
+  <button onclick="generate()">Generate Password</button>
+  <button onclick="copypss()">Copy to Clipboard</button>
+</div><br/>
+<div class ="div10">
+  <b>10:</b>
+  <input type="text" name="sname">
+  <input type="text" id="display">
+  <input type="range" min= "0" max="26" name="slider" id="slider">
+  <button onclick="generate()">Generate Password</button>
+  <button onclick="copypss()">Copy to Clipboard</button>
+</div>
+
+<script src="PGscript.js"></script>
+  </body>
+</html>
